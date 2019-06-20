@@ -360,6 +360,12 @@ public class XLearningConfiguration extends YarnConfiguration {
 
   public static final String XLEARNING_HISTORY_PRINCIPAL = "xlearning.history.principal";
 
+  public static final String XLEARNING_AM_ENV = "yarn.app.xlearning.am.env";
+  public static final String DEFAULT_XLEARNING_AM_ENV = "";
+
+  public static final String XLEARNING_CONTAINER_ENV = "yarn.app.xlearning.container.env";
+  public static final String DEFAULT_XLEARNING_CONTAINER_ENV = "";
+
   /**
    * To enable https in XLEARNING history server
    */
