@@ -26,6 +26,7 @@ import org.apache.hadoop.yarn.api.protocolrecords.*;
 import org.apache.hadoop.yarn.api.records.*;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
 import org.apache.hadoop.yarn.exceptions.YarnException;
+import org.apache.hadoop.yarn.util.Apps;
 import org.apache.hadoop.yarn.util.Records;
 import org.apache.hadoop.yarn.client.api.YarnClient;
 import org.apache.hadoop.yarn.client.api.YarnClientApplication;
@@ -477,6 +478,10 @@ public class Client {
     LOG.info("Building environments for the application master");
     Map<String, String> appMasterEnv = new HashMap<>();
     appMasterEnv.put(XLearningConstants.Environment.XLEARNING_APP_NAME.toString(), clientArguments.appName);
+
+    String containerEnvStr = conf.get(XLearningConfiguration.XLEARNING_AM_ENV,
+        XLearningConfiguration.DEFAULT_XLEARNING_AM_ENV);
+    Apps.setEnvFromInputString(appMasterEnv, containerEnvStr);
     if (clientArguments.appType != null && !clientArguments.appType.equals("")) {
       appMasterEnv.put(XLearningConstants.Environment.XLEARNING_APP_TYPE.toString(), clientArguments.appType);
     } else {

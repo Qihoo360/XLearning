@@ -25,6 +25,7 @@ import org.apache.hadoop.yarn.client.api.AMRMClient.ContainerRequest;
 import org.apache.hadoop.yarn.client.api.async.AMRMClientAsync;
 import org.apache.hadoop.yarn.client.api.async.NMClientAsync;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
+import org.apache.hadoop.yarn.util.Apps;
 import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.apache.hadoop.yarn.util.Records;
 
@@ -985,6 +986,11 @@ public class ApplicationMaster extends CompositeService {
   private Map<String, String> buildContainerEnv(String role) {
     LOG.info("Setting environments for the Container");
     Map<String, String> containerEnv = new HashMap<>();
+
+    String containerEnvStr = conf.get(XLearningConfiguration.XLEARNING_CONTAINER_ENV,
+        XLearningConfiguration.DEFAULT_XLEARNING_CONTAINER_ENV);
+    Apps.setEnvFromInputString(containerEnv, containerEnvStr);
+
     containerEnv.put(XLearningConstants.Environment.HADOOP_USER_NAME.toString(), conf.get("hadoop.job.ugi").split(",")[0]);
     containerEnv.put(XLearningConstants.Environment.XLEARNING_TF_ROLE.toString(), role);
     containerEnv.put(XLearningConstants.Environment.XLEARNING_EXEC_CMD.toString(), xlearningCommand);
